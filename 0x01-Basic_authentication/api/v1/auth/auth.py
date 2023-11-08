@@ -8,7 +8,15 @@ from typing import List, TypeVar
 class Auth:
     """Manage API authentication"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """returns False for now"""
+        """Checks if path requires authentication"""
+        if path and path[-1] != '/':
+            path = path + '/'
+        if path is None or excluded_paths is None:
+            return True
+        if len(excluded_paths) == 0:
+            return True
+        if path not in excluded_paths:
+            return True
         return False
 
     def authorization_header(self, request=None) -> str:
