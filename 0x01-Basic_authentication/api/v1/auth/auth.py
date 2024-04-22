@@ -8,12 +8,12 @@ class Auth:
     """Manages basic authentication"""
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """Checks for authentication"""
+        if path and path[-1] != '/':
+            path = path + '/'
         if path is None:
             return True
         if len(excluded_paths) == 0 or excluded_paths is None:
             return True
-        if path[-1] != '/':
-            path = path + '/'
         if path not in excluded_paths:
             return True
         return False
