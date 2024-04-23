@@ -19,8 +19,12 @@ class Auth:
         return False
 
     def authorization_header(self, request=None) -> str:
-        """Manages the authorization in header"""
-        return None
+        """Checks for authorization in  request header"""
+        if request is None:
+            return None
+        if request.headers.get("Authorization") is None:
+            return None
+        return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Checks for current user"""
