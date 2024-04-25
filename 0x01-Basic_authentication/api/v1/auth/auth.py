@@ -18,6 +18,7 @@ class Auth:
             prefix = excluded.rstrip('*')
             if path.startswith(prefix):
                 return False
+            return True
 
     def authorization_header(self, request=None) -> str:
         """Checks for authorization in  request header"""
