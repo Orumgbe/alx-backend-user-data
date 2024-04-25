@@ -69,7 +69,7 @@ class BasicAuth(Auth):
         if request is None:
             return
         user = None
-        credentials = Auth.authorization_header(request)
+        credentials = self.authorization_header(request)
         if credentials:
             auth_b64 = self.extract_base64_authorization_header(credentials)
             if auth_b64:
