@@ -68,14 +68,16 @@ class BasicAuth(Auth):
         """Overloads the auth and retrieves user for a request"""
         if request is None:
             return
-        user = None
         credentials = self.authorization_header(request)
-        if credentials:
-            auth_b64 = self.extract_base64_authorization_header(credentials)
-            if auth_b64:
-                auth_txt = self.decode_base64_authorization_header()
-                if auth_txt:
-                    username, pwd = self.extract_user_credentials(auth_txt)
-                    if username and pwd:
-                        user = self.user_object_from_credentials(username, pwd)
-        return user
+        if not credentials:
+            return None
+        auth_b64 = self.extract_base64_authorization_header(credentials)
+        if not auth_b64:
+            return None
+        auth_txt = self.decode_base64_authorization_header()
+        if not auth_txt:
+            return None
+        username, pwd = self.extract_user_credentials(auth_txt)
+        if username and pwd:
+            return self.user_object_from_credentials(username, pwd)
+        return None
